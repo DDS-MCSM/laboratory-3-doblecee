@@ -1,7 +1,7 @@
 ---
 title: "Answers Lab3"
-author: "You Name"
-date: "12/6/2018"
+author: "Pablo Cid Ramos"
+date: "12/12/2018"
 output: html_document
 ---
 
@@ -15,45 +15,62 @@ This is an R Markdown document including the solutions to the laboratory 3 for t
 
 ## Crawling y Scrapping
 
-Using the functions implemented in the file `code.R`.
+Using the functions implemented in the file `code.R`.  Primeramente, leemos las funciones contruidas y descargamos los paquetes utilizados.
 
-```{r file_load, error=FALSE}
-# source("./code.R")
+```{r file_load, error=FALSE, results='hide'}
+source("./code.R")
 ```
 
 
 ### 1.1 Obtenci√≥n de la p√°gina web
-
-```{r get_title, include=FALSE}
+Primeramente, definimos quÈ p·gina web queremos buscar y la descargamos para analizarla.
+```{r get_title, echo=TRUE}
+url <- "https://www.mediawiki.org/wiki/MediaWiki"
+doc <- get_title(url)
 
 ```
 
 
 ### 1.2 Analisis de el contenido de la web
-
-```{r web_content, include=FALSE}
-
+De esta manera, podemos obtener informaciÛn como el tÌtulo de la p·gina web, por ejemplo.
+```{r web_content}
+titulo <- web_content(doc)
+print(titulo)
 ```
 
 
 ### 1.3.	Extracci√≥n de enlaces 
+Seguidamente, creamos un dataframe con los enlaces que tiene esta p·gina web.
 
-
-```{r get_links, include=FALSE}
-
+```{r get_links}
+project <- get_links(doc)
+knitr::kable(project, format = "html")
 ```
 
 
 ### 1.4 Exploraci√≥n de enlaces
-
-```{r expl_links, include=FALSE}
-
+Por otro lado, analizamos si estos enlaces son absolutos o relativos y comprobamos su estado.
+```{r expl_links}
+project <- expl_links(project)
+knitr::kable(project, format = "html")
 ```
 
 ### Gr√°ficos en R
 
 ### 2.1	Histograma
+Una vez obtenido el dataframe con el que vamos a trabajar, podemos crear un histograma para ver cu·les son los enlaces m·s frecuentes, tanto para enlaces absolutos como enlaces relativos.
+```{r hist}
+hist(project)
+```
 
 ### 2.2	Un gr√°fico de barras
+Por otro lado, podemos observar, realizando un gr·fico de barras, que existen m·s enlaces a p·ginas del mismo dominio que a dominios externos.
+```{r bar}
+bar(project)
+```
 
 ### 2.3 Pie Chart
+Por ˙ltimo, observamos que la gran parte de los enlaces son enlaces activos, creando un gr·fico circular.
+```{r chart}
+chart(project)
+```
